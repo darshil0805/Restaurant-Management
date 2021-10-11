@@ -1,27 +1,23 @@
 import java.util.ArrayList;
+class Item {
+    String name;
+    int id;
+    float price;
+
+    Item(int id, String name, float price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+
+}
 
 public class Solution {
-
-    public class Item {
-        String name;
-        int id;
-        float price;
-
-        Item(int id, String name, float price) {
-            this.id = id;
-            this.name = name;
-            this.price = price;
-        }
-
-
-    }
-    final private static class Admin {
+    static final private class Admin {
 
 
         class PriceList {
-
-
-
             //            Item I1= new Item();
             ArrayList<Item> items = new ArrayList<>();
 
