@@ -1,6 +1,8 @@
 import jdk.internal.access.JavaIOFileDescriptorAccess;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 class Item {
@@ -112,6 +114,7 @@ public class Solution {
         void addItem(String name, float price) {
             int index = PriceList.priceList.size();
             Item item = new Item(index, name, price);
+            PriceList.priceList.add(item);
         }
 
         void removeItem(int index) {
@@ -141,10 +144,10 @@ public class Solution {
     }
 
     static class RestaurantState {
-        private int state = 0;
+        private static int state = 0;
 
-        @Override
-        public String toString() {
+
+        public static String currentState() {
             // 0 stands for closed/full 1 stands for open
 
             if (state == 0) {
@@ -153,8 +156,8 @@ public class Solution {
             return "Restaurant is Open";
         }
 
-        void setState(int state) {
-            this.state = state;
+        static void setState(int state) {
+            RestaurantState.state = state;
         }
     }
 
@@ -178,7 +181,51 @@ public class Solution {
 
 
     public static void main(String[] args) {
+
         Admin a1 = new Admin();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        System.out.println("Welcome Admin, " + formatter.format(date));
+        System.out.println("Press 1: To change the restaurant state");
+        System.out.println("Press 2: To edit the Pricelist");
+        System.out.println("Press 3: To add an expense");
+        System.out.println("Press 4: To change the cooking state of an order");
+        System.out.println("Press 5: To see the revenue till now");
+        System.out.println("Press 6: To see the profits till now");
+
+        Scanner sc = new Scanner(System.in);
+        switch (sc.nextInt()){
+            case 1:
+                System.out.println("The current restaurant state is" + RestaurantState.currentState());
+                System.out.println("Press 0 to set the state to closed/full, 1 to set state to opened ");
+                switch (sc.nextInt()){
+                    case 0:
+                        RestaurantState.setState(0);
+                        System.out.println("Restaurant State set to closed");
+                    case 1:
+                        RestaurantState.setState(1);
+                        System.out.println("Restaurant State set to opened");
+                }
+            case 2:
+                System.out.println(PriceList.priceList.toString());
+                System.out.println("Press 1 to add item, 2 to edit an item , 3 to remove an item");
+                switch (sc.nextInt()){
+                    case 1:
+                        System.out.println("Enter Name");
+                        String name = sc.nextLine();
+                        System.out.println("Enter Price");
+                        float price = sc.nextFloat();
+                        a1.addItem(name,price);
+                    case 2:
+                        System.out.println("Enter Item ID");
+                        int id = sc.nextInt();
+                        System.out.println("Enter Name");
+                        String name1 = sc.nextLine();
+
+                }
+        }
+
+
     }
 
 
