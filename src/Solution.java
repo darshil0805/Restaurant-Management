@@ -103,21 +103,21 @@ public class Solution {
 
     static final class Admin {
         static ArrayList<Order> allOrders = new ArrayList<>();
-        private float expenses = 0;
+        private static float expenses = 0;
 
-        void changeItem(String name, int index, float price) {
+        static void changeItem(String name, int index, float price) {
             Item item = new Item(index, name, price);
             PriceList.priceList.set(index, item);
         }
 
 
-        void addItem(String name, float price) {
+        static void addItem(String name, float price) {
             int index = PriceList.priceList.size();
             Item item = new Item(index, name, price);
             PriceList.priceList.add(item);
         }
 
-        void removeItem(int index) {
+        static void removeItem(int index) {
             PriceList.priceList.remove(index);
             for (int i = 0; i < PriceList.priceList.size(); i++) {
                 Item item_change = PriceList.priceList.get(i);
@@ -126,7 +126,7 @@ public class Solution {
             }
         }
 
-        float revenue() {
+    static float revenue() {
             float rev = 0;
             for (int i = 0; i < allOrders.size(); i++) {
                 rev += allOrders.get(i).grossAmt();
@@ -134,11 +134,11 @@ public class Solution {
             return rev;
         }
 
-        float profit() {
-            return this.revenue() - expenses;
+        static float profit() {
+            return Admin.revenue() - expenses;
         }
 
-        void addExpense(float amt) {
+        static void addExpense(float amt) {
             expenses += amt;
         }
     }
@@ -169,9 +169,9 @@ public class Solution {
             // 0 stands for closed/full 1 stands for open
 
             if (cState == 0) {
-                return "Restaurant is Closed/Full";
+                return "Food in being cooked";
             }
-            return "Restaurant is Open";
+            return "Food is ready";
         }
 
         void setState(int state) {
@@ -182,9 +182,10 @@ public class Solution {
 
     public static void main(String[] args) {
 
-        Admin a1 = new Admin();
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
+        while (true){
         System.out.println("Welcome Admin, " + formatter.format(date));
         System.out.println("Press 1: To change the restaurant state");
         System.out.println("Press 2: To edit the Pricelist");
@@ -194,11 +195,11 @@ public class Solution {
         System.out.println("Press 6: To see the profits till now");
 
         Scanner sc = new Scanner(System.in);
-        switch (sc.nextInt()){
+        switch (sc.nextInt()) {
             case 1:
                 System.out.println("The current restaurant state is" + RestaurantState.currentState());
                 System.out.println("Press 0 to set the state to closed/full, 1 to set state to opened ");
-                switch (sc.nextInt()){
+                switch (sc.nextInt()) {
                     case 0:
                         RestaurantState.setState(0);
                         System.out.println("Restaurant State set to closed");
@@ -209,27 +210,61 @@ public class Solution {
             case 2:
                 System.out.println(PriceList.priceList.toString());
                 System.out.println("Press 1 to add item, 2 to edit an item , 3 to remove an item");
-                switch (sc.nextInt()){
+                switch (sc.nextInt()) {
                     case 1:
                         System.out.println("Enter Name");
                         String name = sc.nextLine();
                         System.out.println("Enter Price");
                         float price = sc.nextFloat();
-                        a1.addItem(name,price);
+                        Admin.addItem(name, price);
+                        System.out.println("Item added");
                     case 2:
                         System.out.println("Enter Item ID");
                         int id = sc.nextInt();
                         System.out.println("Enter Name");
                         String name1 = sc.nextLine();
+                        System.out.println("Enter Price");
+                        float price1 = sc.nextFloat();
+                        Admin.changeItem(name1, id, price1);
+                        System.out.println("Item changed");
+                    case 3:
+                        System.out.println("Enter Item ID");
+                        int id1 = sc.nextInt();
+                        Admin.removeItem(id1);
+                        System.out.println("Item removed");
 
                 }
+            case 3:
+                System.out.println("Enter the expense");
+                Admin.addExpense(sc.nextFloat());
+
+            case 4:
+                System.out.println("Enter order id between 0-" + Admin.allOrders.size());
+                int id = sc.nextInt();
+                System.out.println(Admin.allOrders.get(id));
+                System.out.println("Press 1 to change to the cooking state to SERVED else press 0");
+                switch (sc.nextInt()){
+                    case 0:
+                        Admin.allOrders.get(id).setState(0);
+                        System.out.println("The order state is PREPARING");
+                    case 1:
+                        Admin.allOrders.get(id).setState(1);
+                        System.out.println("The order state is set to SERVED");
+                }
+
+
+
+            case 5:
+                System.out.println("Your revenue is" +Admin.revenue());
+            case 6:
+                System.out.println("Your profit is" + Admin.profit());
         }
 
 
     }
+}}
 
 
-}
 
 
 
