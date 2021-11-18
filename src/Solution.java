@@ -1,4 +1,5 @@
 
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +11,8 @@ class Item {
     int id;
     float price;
 
-    void printItem(){
-        System.out.println("ItemID: "+id + " Name: "+name+ " Price: "+ price );
+    void printItem() {
+        System.out.println("ItemID: " + id + " Name: " + name + " Price: " + price);
     }
 
 
@@ -59,7 +60,7 @@ class Order extends Solution.CookingState {
     }
 }
 
-class Customer {
+class Customer extends Thread{
     String name;
     private int id;
     Order newOrder;
@@ -67,6 +68,8 @@ class Customer {
 
     Customer(String name) {
         this.name = name;
+        Solution.Admin.allCustomers.add(this);
+        order();
     }
 
     void getBill() {
@@ -98,6 +101,10 @@ class Customer {
     }
 
 
+    void printCustomer() {
+        System.out.println("CustomerID: " + id + " Name: " + name);
+    }
+
 }
 
 
@@ -105,8 +112,8 @@ public class Solution {
     static class PriceList {
         static ArrayList<Item> priceList = new ArrayList<>();
 
-        static void printPriceList(){
-            for(int i = 0; i < priceList.size();i++){
+        static void printPriceList() {
+            for (int i = 0; i < priceList.size(); i++) {
                 priceList.get(i).printItem();
             }
         }
@@ -114,6 +121,8 @@ public class Solution {
 
     static final class Admin {
         static ArrayList<Order> allOrders = new ArrayList<>();
+        static ArrayList<Customer> allCustomers = new ArrayList<>();
+
         private static float expenses = 0;
 
         static void changeItem(String name, int index, float price) {
@@ -192,8 +201,6 @@ public class Solution {
 
 
     public static void main(String[] args) {
-
-
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         while (true) {
@@ -319,7 +326,7 @@ public class Solution {
                             break;
                         }
                     }
-break;
+                    break;
                 }
                 case 5:
                     System.out.println("Your revenue is" + Admin.revenue());
