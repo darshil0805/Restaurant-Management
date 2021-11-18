@@ -1,7 +1,7 @@
-import jdk.internal.access.JavaIOFileDescriptorAccess;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -9,6 +9,11 @@ class Item {
     String name;
     int id;
     float price;
+
+    void printItem(){
+        System.out.println("ItemID: "+id + " Name: "+name+ " Price: "+ price );
+    }
+
 
     Item(int id, String name, float price) {
         this.id = id;
@@ -99,6 +104,12 @@ class Customer {
 public class Solution {
     static class PriceList {
         static ArrayList<Item> priceList = new ArrayList<>();
+
+        static void printPriceList(){
+            for(int i = 0; i < priceList.size();i++){
+                priceList.get(i).printItem();
+            }
+        }
     }
 
     static final class Admin {
@@ -126,7 +137,7 @@ public class Solution {
             }
         }
 
-    static float revenue() {
+        static float revenue() {
             float rev = 0;
             for (int i = 0; i < allOrders.size(); i++) {
                 rev += allOrders.get(i).grossAmt();
@@ -185,84 +196,143 @@ public class Solution {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        while (true){
-        System.out.println("Welcome Admin, " + formatter.format(date));
-        System.out.println("Press 1: To change the restaurant state");
-        System.out.println("Press 2: To edit the Pricelist");
-        System.out.println("Press 3: To add an expense");
-        System.out.println("Press 4: To change the cooking state of an order");
-        System.out.println("Press 5: To see the revenue till now");
-        System.out.println("Press 6: To see the profits till now");
+        while (true) {
+            System.out.println("Welcome Admin, " + formatter.format(date));
+            System.out.println("Press 1: To change the restaurant state");
+            System.out.println("Press 2: To edit the Pricelist");
+            System.out.println("Press 3: To add an expense");
+            System.out.println("Press 4: To change the cooking state of an order");
+            System.out.println("Press 5: To see the revenue till now");
+            System.out.println("Press 6: To see the profits till now");
 
-        Scanner sc = new Scanner(System.in);
-        switch (sc.nextInt()) {
-            case 1:
-                System.out.println("The current restaurant state is" + RestaurantState.currentState());
-                System.out.println("Press 0 to set the state to closed/full, 1 to set state to opened ");
-                switch (sc.nextInt()) {
-                    case 0:
-                        RestaurantState.setState(0);
-                        System.out.println("Restaurant State set to closed");
-                    case 1:
-                        RestaurantState.setState(1);
-                        System.out.println("Restaurant State set to opened");
+            Scanner sc = new Scanner(System.in);
+            int main = sc.nextInt();
+//            sc.close();
+            System.out.println(main);
+            switch (main) {
+                case 1: {
+                    System.out.println("The current restaurant state is" + RestaurantState.currentState());
+                    System.out.println("Press 0 to set the state to closed/full, 1 to set state to opened ");
+                    Scanner sc1 = new Scanner(System.in);
+                    int sec = sc1.nextInt();
+//                    sc1.close();
+                    switch (sec) {
+                        case 0: {
+                            RestaurantState.setState(0);
+                            System.out.println("Restaurant State set to closed");
+                            break;
+                        }
+                        case 1: {
+                            RestaurantState.setState(1);
+                            System.out.println("Restaurant State set to opened");
+                            break;
+                        }
+
+                    }
+                    break;
                 }
-            case 2:
-                System.out.println(PriceList.priceList.toString());
-                System.out.println("Press 1 to add item, 2 to edit an item , 3 to remove an item");
-                switch (sc.nextInt()) {
-                    case 1:
-                        System.out.println("Enter Name");
-                        String name = sc.nextLine();
-                        System.out.println("Enter Price");
-                        float price = sc.nextFloat();
-                        Admin.addItem(name, price);
-                        System.out.println("Item added");
-                    case 2:
-                        System.out.println("Enter Item ID");
-                        int id = sc.nextInt();
-                        System.out.println("Enter Name");
-                        String name1 = sc.nextLine();
-                        System.out.println("Enter Price");
-                        float price1 = sc.nextFloat();
-                        Admin.changeItem(name1, id, price1);
-                        System.out.println("Item changed");
-                    case 3:
-                        System.out.println("Enter Item ID");
-                        int id1 = sc.nextInt();
-                        Admin.removeItem(id1);
-                        System.out.println("Item removed");
+                case 2: {
+                    System.out.println("Showing PriceList");
+                    PriceList.printPriceList();
+                    System.out.println("Press 1 to add item, 2 to edit an item , 3 to remove an item");
+                    Scanner sc1 = new Scanner(System.in);
+                    int sec = sc1.nextInt();
+//                    sc1.close();
+                    switch (sec) {
+                        case 1: {
+                            System.out.println("Enter Name");
+                            Scanner sc2 = new Scanner(System.in);
+                            String name = sc2.nextLine();
+//                            sc2.close();
 
+                            if (!name.equals("")) {
+                                System.out.println("Enter Price");
+                                Scanner sc3 = new Scanner(System.in);
+                                float price = sc3.nextFloat();
+//                                sc3.close();
+                                Admin.addItem(name, price);
+                                System.out.println("Item added");
+                                break;
+                            }
+
+                            //break;
+                        }
+                        case 2: {
+                            System.out.println("Enter Item ID");
+                            Scanner sc2 = new Scanner(System.in);
+                            int id = sc2.nextInt();
+//                            sc2.close();
+                            System.out.println("Enter Name");
+                            Scanner sc3 = new Scanner(System.in);
+                            String name = sc3.nextLine();
+//                            sc3.close();
+                            String name1 = sc3.nextLine();
+                            System.out.println("Enter Price");
+                            Scanner sc4 = new Scanner(System.in);
+                            float price1 = sc4.nextFloat();
+//                            sc4.close();
+                            Admin.changeItem(name1, id, price1);
+                            System.out.println("Item changed");
+                            break;
+                        }
+                        case 3: {
+                            System.out.println("Enter Item ID");
+                            Scanner sc2 = new Scanner(System.in);
+                            int id1 = sc2.nextInt();
+//                            sc2.close();
+                            Admin.removeItem(id1);
+                            System.out.println("Item removed");
+                            break;
+                        }
+
+                    }
+                    break;
                 }
-            case 3:
-                System.out.println("Enter the expense");
-                Admin.addExpense(sc.nextFloat());
-
-            case 4:
-                System.out.println("Enter order id between 0-" + Admin.allOrders.size());
-                int id = sc.nextInt();
-                System.out.println(Admin.allOrders.get(id));
-                System.out.println("Press 1 to change to the cooking state to SERVED else press 0");
-                switch (sc.nextInt()){
-                    case 0:
-                        Admin.allOrders.get(id).setState(0);
-                        System.out.println("The order state is PREPARING");
-                    case 1:
-                        Admin.allOrders.get(id).setState(1);
-                        System.out.println("The order state is set to SERVED");
+                case 3: {
+                    System.out.println("Enter the expense");
+                    Scanner sc4 = new Scanner(System.in);
+                    float price1 = sc4.nextFloat();
+//                    sc4.close();
+                    Admin.addExpense(price1);
+                    break;
                 }
 
+                case 4: {
+                    System.out.println("Enter order id between 0-" + Admin.allOrders.size());
+                    Scanner sc2 = new Scanner(System.in);
+                    int id = sc2.nextInt();
+//                    sc2.close();
+                    System.out.println(Admin.allOrders.get(id));
+                    System.out.println("Press 1 to change to the cooking state to SERVED else press 0");
+                    Scanner sc3 = new Scanner(System.in);
+                    int id2 = sc3.nextInt();
+//                    sc3.close();
+                    switch (id2) {
+                        case 0: {
+                            Admin.allOrders.get(id).setState(0);
+                            System.out.println("The order state is PREPARING");
+                            break;
+                        }
+                        case 1: {
+                            Admin.allOrders.get(id).setState(1);
+                            System.out.println("The order state is set to SERVED");
+                            break;
+                        }
+                    }
+break;
+                }
+                case 5:
+                    System.out.println("Your revenue is" + Admin.revenue());
+                    break;
+                case 6:
+                    System.out.println("Your profit is" + Admin.profit());
+                    break;
+            }
 
 
-            case 5:
-                System.out.println("Your revenue is" +Admin.revenue());
-            case 6:
-                System.out.println("Your profit is" + Admin.profit());
         }
-
-
     }
-}}
+}
 
 
 
