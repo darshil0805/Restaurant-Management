@@ -69,8 +69,10 @@ class Customer extends Thread{
     Customer(String name) {
         this.name = name;
         Solution.Admin.allCustomers.add(this);
-        order();
+        this.id= Solution.Admin.allCustomers.size();
+//        order();
     }
+
 
     void getBill() {
         System.out.println(newOrder.currentOrder.toString());
@@ -199,8 +201,21 @@ public class Solution {
         }
     }
 
-
+//static {
+//    new Customer("Darshil");
+//    new Customer("Sarthak");
+//    Admin.addItem("Paneer Butter", 99.2f);
+//    Admin.addItem("Dal Makhani", 9.2f);
+//    Admin.addItem("Butter Roti", 22.6f);
+//}
     public static void main(String[] args) {
+        new Customer("Darshil");
+        new Customer("Sarthak");
+       Admin.addItem("Paneer Butter", 99.2f);
+       Admin.addItem("Dal Makhani", 9.2f);
+       Admin.addItem("Butter Roti", 22.6f);
+
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         while (true) {
