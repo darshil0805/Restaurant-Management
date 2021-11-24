@@ -2,121 +2,6 @@ import java.text.SimpleDateFormat; //importing the java lib to get the current d
 import java.util.*;// importing various lists
 
 
-// item class signifies the class of each food item that is available on the Restaurant Menu
-//It consists of various parameters as shown below
-class Item {
-    String name;
-    int id;
-    float price;
-
-    void printItem() {
-        System.out.println("ItemID: " + id + " Name: " + name + " Price: " + price);
-    }
-
-
-    Item(int id, String name, float price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-}
-
-// Itemq class consists of an item bind to its quantity ordered by the customer
-// this is done so as to make the order taking process easier
-class ItemQ extends Item {
-    int quantity;
-    float amount;
-
-    ItemQ(Item item, int quantity) {
-        super(item.id, item.name, item.price);
-        this.quantity = quantity;
-        this.amount = (this.quantity) * (this.price);
-    }
-}
-
-
-// Order class basically consists of an array list of all the itemQs
-class Order extends Solution.CookingState {
-    ArrayList<ItemQ> currentOrder;
-
-    //whenever a Customer gives an order
-    Order() {
-        currentOrder = new ArrayList<>();
-        Solution.Admin.allOrders.add(this);
-    }
-
-    // Showing the gross amount of the bill without the taxes
-    float grossAmt() {
-        float amt = 0;
-        for (int i = 0; i < currentOrder.size(); i++) {
-            amt += currentOrder.get(i).amount;
-        }
-        return amt;
-    }
-// showing the net amt with the taxes
-    float netAmt() {
-        return grossAmt() * 1.18f;
-    }
-
-    public String toString() {
-        return super.toString();
-    }
-}
-
-
-//Customer class contains the details of all the customers with various parameters as shown
-class Customer {
-    String name;
-    private int id;
-    Order newOrder;
-
-
-    Customer(String name) {
-        this.name = name;
-        Solution.Admin.allCustomers.add(this);
-        this.id = Solution.Admin.allCustomers.size();
-    }
-
-
-    void getBill() {
-        System.out.println(newOrder.currentOrder.toString());
-        System.out.println("Gross amount for your order is:" + newOrder.grossAmt());
-        System.out.println("Net amount after 18% gst is: " + newOrder.netAmt());
-
-    }
-
-    String getMenu() {
-        return Solution.PriceList.priceList.toString();
-    }
-
-
-    // the order function is used to initiate an order instance, the oder is to be given in a specific format
-    void order() {
-        System.out.println("The order should be in the format : Item1id Item1quantity <enter>Item2id Item2quantity <enter> Item3id Item3quantity");
-        System.out.println("Press anything except an integer to end the order");
-        newOrder = new Order();
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextInt()) {
-
-            int id = scanner.nextInt();
-            int quant = scanner.nextInt();
-            ItemQ food = new ItemQ(Solution.PriceList.priceList.get(id), quant);
-            newOrder.currentOrder.add(food);
-        }
-    }
-
-    void getOrderStatus() {
-        System.out.println(newOrder);
-    }
-
-
-    void printCustomer() {
-        System.out.println("CustomerID: " + id + " Name: " + name);
-    }
-
-}
-
-
 public class Solution {
 
     // PriceList is basically the collection of all the items that are available in the menu with their price
@@ -211,7 +96,7 @@ public class Solution {
             // 0 stands for closed/full 1 stands for open
 
             if (cState == 0) {
-                return "Food in being cooked";
+                return "Food is being cooked";
             }
             return "Food is ready";
         }
