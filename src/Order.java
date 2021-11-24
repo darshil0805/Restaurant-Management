@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 // Order class basically consists of an array list of all the itemQs
-public class Order extends Solution.CookingState {
+public class Order extends States.CookingState {
     ArrayList<ItemQ> currentOrder;
 
     //whenever a Customer gives an order
     Order() {
         currentOrder = new ArrayList<>();
-        Solution.Admin.allOrders.add(this);
+        SuperAdmin.Admin.allOrders.add(this);
     }
 
     // Showing the gross amount of the bill without the taxes

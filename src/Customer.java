@@ -9,8 +9,8 @@ public class Customer {
 
     Customer(String name) {
         this.name = name;
-        Solution.Admin.allCustomers.add(this);
-        this.id = Solution.Admin.allCustomers.size();
+        SuperAdmin.Admin.allCustomers.add(this);
+        this.id = SuperAdmin.Admin.allCustomers.size();
     }
 
 
@@ -22,7 +22,7 @@ public class Customer {
     }
 
     String getMenu() {
-        return Solution.PriceList.priceList.toString();
+        return SuperAdmin.PriceList.priceList.toString();
     }
 
 
@@ -36,7 +36,7 @@ public class Customer {
 
             int id = scanner.nextInt();
             int quant = scanner.nextInt();
-            ItemQ food = new ItemQ(Solution.PriceList.priceList.get(id), quant);
+            ItemQ food = new ItemQ(SuperAdmin.PriceList.priceList.get(id), quant);
             newOrder.currentOrder.add(food);
         }
     }
