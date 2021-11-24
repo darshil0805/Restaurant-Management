@@ -75,7 +75,6 @@ class Customer {
         this.name = name;
         Solution.Admin.allCustomers.add(this);
         this.id = Solution.Admin.allCustomers.size();
-//        order();
     }
 
 
@@ -238,13 +237,23 @@ public class Solution {
 
                    System.out.println("Welcome to Pizzeria, Hope you have a Good day");
                    while (true) {
-                       System.out.println("Press 1 for New Customer");
-                       System.out.println("Press 2 to see existing order status and bill");
-                       System.out.println("Press 3 to go to the main menu");
+                       if (RestaurantState.state == 0) {
+                           System.out.println("Restaurant is Closed/Full, no new orders can be taken");
+                           System.out.println("Press 2 to see existing order status and bill");
+                           System.out.println("Press 3 to go to the main menu");
+                       }
+                       else{
+                           System.out.println("Press 1 for New Customer");
+                           System.out.println("Press 2 to see existing order status and bill");
+                           System.out.println("Press 3 to go to the main menu");
+                       }
+
                        Scanner sc = new Scanner(System.in);
                        int get = sc.nextInt();
                        try {
-                           if(get==3){break;}
+                           if((RestaurantState.state == 0 && get==1) || get==3){
+                               break;
+                           }
                        switch (get) {
                            case 1: {
                                System.out.println("Please enter your name");
@@ -308,7 +317,6 @@ public class Solution {
                                    Scanner sc1 = new Scanner(System.in);
                                    try {
                                        int sec = sc1.nextInt();
-//                    sc1.close();
                                        switch (sec) {
                                            case 0: {
                                                RestaurantState.setState(0);
@@ -338,7 +346,6 @@ public class Solution {
                                    Scanner sc1 = new Scanner(System.in);
                                    try {
                                        int sec = sc1.nextInt();
-//                    sc1.close();
                                        switch (sec) {
                                            case 1: {
                                                System.out.println("Enter Name");
