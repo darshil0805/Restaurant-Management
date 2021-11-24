@@ -1,10 +1,14 @@
 
-import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 class Item {
     String name;
@@ -60,7 +64,7 @@ class Order extends Solution.CookingState {
     }
 }
 
-class Customer extends Thread{
+class Customer{
     String name;
     private int id;
     Order newOrder;
@@ -200,7 +204,7 @@ public class Solution {
             this.cState = state;
         }
     }
-
+//
 //static {
 //    new Customer("Darshil");
 //    new Customer("Sarthak");
@@ -343,12 +347,24 @@ public class Solution {
                     }
                     break;
                 }
-                case 5:
+                case 5: {
                     System.out.println("Your revenue is" + Admin.revenue());
                     break;
-                case 6:
+                }
+                case 6: {
                     System.out.println("Your profit is" + Admin.profit());
                     break;
+                }
+                case 7: {
+                    System.out.println("Please enter the customer's name");
+                    Scanner sc2 = new Scanner(System.in);
+                    String name = sc2.nextLine();
+                    Solution.PriceList.printPriceList();
+                    Customer c1= new Customer(name);
+                    c1.order();
+                    System.out.println("Thank you for ordering, you can check your order status from the main menu");
+                    break;
+                }
             }
 
 
