@@ -1,9 +1,6 @@
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -64,7 +61,7 @@ class Order extends Solution.CookingState {
     }
 }
 
-class Customer{
+class Customer {
     String name;
     private int id;
     Order newOrder;
@@ -73,7 +70,7 @@ class Customer{
     Customer(String name) {
         this.name = name;
         Solution.Admin.allCustomers.add(this);
-        this.id= Solution.Admin.allCustomers.size();
+        this.id = Solution.Admin.allCustomers.size();
 //        order();
     }
 
@@ -204,7 +201,8 @@ public class Solution {
             this.cState = state;
         }
     }
-//
+
+    //
 //static {
 //    new Customer("Darshil");
 //    new Customer("Sarthak");
@@ -215,14 +213,15 @@ public class Solution {
     public static void main(String[] args) {
         new Customer("Darshil");
         new Customer("Sarthak");
-       Admin.addItem("Paneer Butter", 99.2f);
-       Admin.addItem("Dal Makhani", 9.2f);
-       Admin.addItem("Butter Roti", 22.6f);
+        Admin.addItem("Paneer Butter", 99.2f);
+        Admin.addItem("Dal Makhani", 9.2f);
+        Admin.addItem("Butter Roti", 22.6f);
 
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         while (true) {
+
             System.out.println("Welcome Admin, " + formatter.format(date));
             System.out.println("Press 1: To change the restaurant state");
             System.out.println("Press 2: To edit the Pricelist");
@@ -230,141 +229,189 @@ public class Solution {
             System.out.println("Press 4: To change the cooking state of an order");
             System.out.println("Press 5: To see the revenue till now");
             System.out.println("Press 6: To see the profits till now");
-
+            System.out.println("Press 7: To add a new Customer");
             Scanner sc = new Scanner(System.in);
-            int main = sc.nextInt();
-//            sc.close();
-            System.out.println(main);
-            switch (main) {
-                case 1: {
-                    System.out.println("The current restaurant state is" + RestaurantState.currentState());
-                    System.out.println("Press 0 to set the state to closed/full, 1 to set state to opened ");
-                    Scanner sc1 = new Scanner(System.in);
-                    int sec = sc1.nextInt();
+
+
+            try {
+                int main = sc.nextInt();
+                switch (main) {
+                    case 1: {
+                        System.out.println("The current restaurant state is" + RestaurantState.currentState());
+                        System.out.println("Press 0 to set the state to closed/full, 1 to set state to opened ");
+                        Scanner sc1 = new Scanner(System.in);
+                        try {
+                            int sec = sc1.nextInt();
 //                    sc1.close();
-                    switch (sec) {
-                        case 0: {
-                            RestaurantState.setState(0);
-                            System.out.println("Restaurant State set to closed");
+                            switch (sec) {
+                                case 0: {
+                                    RestaurantState.setState(0);
+                                    System.out.println("Restaurant State set to closed");
+                                    break;
+                                }
+                                case 1: {
+                                    RestaurantState.setState(1);
+                                    System.out.println("Restaurant State set to opened");
+                                    break;
+                                }
+                                default:
+                                    System.out.println("Press 0 or 1 only");
+                            }
+                            break;
+                        } catch (NullPointerException ee) {
+                            System.out.println("Press 0 or 1 only");
                             break;
                         }
-                        case 1: {
-                            RestaurantState.setState(1);
-                            System.out.println("Restaurant State set to opened");
+                    }
+
+
+                    case 2: {
+                        System.out.println("Showing PriceList");
+                        PriceList.printPriceList();
+                        System.out.println("Press 1 to add item, 2 to edit an item , 3 to remove an item");
+                        Scanner sc1 = new Scanner(System.in);
+                        try {
+                            int sec = sc1.nextInt();
+//                    sc1.close();
+                            switch (sec) {
+                                case 1: {
+                                    System.out.println("Enter Name");
+                                    Scanner sc2 = new Scanner(System.in);
+                                    String name = sc2.nextLine();
+                                    if (!name.equals("")) {
+                                        System.out.println("Enter Price");
+                                        Scanner sc3 = new Scanner(System.in);
+                                        try {
+                                            float price = sc3.nextFloat();
+                                            Admin.addItem(name, price);
+                                            System.out.println("Item added");
+                                            break;
+                                        } catch (Exception mmm) {
+                                            System.out.println("please enter a floating point integer");
+                                            break;
+                                        }
+                                    }
+                                }
+                                case 2: {
+                                    System.out.println("Enter Item ID");
+                                    Scanner sc2 = new Scanner(System.in);
+                                    int id = sc2.nextInt();
+                                    System.out.println("Enter Name");
+                                    Scanner sc3 = new Scanner(System.in);
+                                    String name1 = sc3.nextLine();
+                                    System.out.println("Enter Price");
+                                    Scanner sc4 = new Scanner(System.in);
+                                    try {
+                                        float price1 = sc4.nextFloat();
+                                        Admin.changeItem(name1, id, price1);
+                                        System.out.println("Item changed");
+                                        break;
+                                    } catch (Exception kk) {
+                                        System.out.println("Please enter floating point no");
+                                        break;
+                                    }
+                                }
+                                case 3: {
+                                    System.out.println("Enter Item ID");
+                                    Scanner sc2 = new Scanner(System.in);
+                                    int id1 = sc2.nextInt();
+                                    Admin.removeItem(id1);
+                                    System.out.println("Item removed");
+                                    break;
+                                }
+                                default:
+                                    System.out.println("Please enter an integer between 1-3");
+                            }
                             break;
+                        } catch (Exception mm) {
+                            System.out.println("Please enter an integer between 1-3");
+                            break;
+                        }
+                    }
+                    case 3: {
+                        System.out.println("Enter the expense");
+                        Scanner sc4 = new Scanner(System.in);
+
+                        try {
+                            float price1 = sc4.nextFloat();
+                            Admin.addExpense(price1);
+                            break;
+                        } catch (Exception m) {
+                            System.out.println("Please enter a floating point number");
+
+
+                            break;
+
+
                         }
 
                     }
-                    break;
-                }
-                case 2: {
-                    System.out.println("Showing PriceList");
-                    PriceList.printPriceList();
-                    System.out.println("Press 1 to add item, 2 to edit an item , 3 to remove an item");
-                    Scanner sc1 = new Scanner(System.in);
-                    int sec = sc1.nextInt();
-//                    sc1.close();
-                    switch (sec) {
-                        case 1: {
-                            System.out.println("Enter Name");
-                            Scanner sc2 = new Scanner(System.in);
-                            String name = sc2.nextLine();
-//                            sc2.close();
 
-                            if (!name.equals("")) {
-                                System.out.println("Enter Price");
-                                Scanner sc3 = new Scanner(System.in);
-                                float price = sc3.nextFloat();
-//                                sc3.close();
-                                Admin.addItem(name, price);
-                                System.out.println("Item added");
+                    case 4: {
+                        System.out.println("Enter order id between 0-" + Admin.allOrders.size());
+                        Scanner sc2 = new Scanner(System.in);
+                        try {
+
+                            int id = sc2.nextInt();
+                            System.out.println(Admin.allOrders.get(id));
+                            System.out.println("Press 1 to change to the cooking state to SERVED else press 0");
+                            Scanner sc3 = new Scanner(System.in);
+                            try {
+                                int id2 = sc3.nextInt();
+//                    sc3.close();
+                                switch (id2) {
+                                    case 0: {
+                                        Admin.allOrders.get(id).setState(0);
+                                        System.out.println("The order state is PREPARING");
+                                        break;
+                                    }
+                                    case 1: {
+                                        Admin.allOrders.get(id).setState(1);
+                                        System.out.println("The order state is set to SERVED");
+                                        break;
+                                    }
+                                    default:
+                                        System.out.println("PLease enter an integer between 0-1");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("please enter an between 0-1");
                                 break;
                             }
 
-                            //break;
-                        }
-                        case 2: {
-                            System.out.println("Enter Item ID");
-                            Scanner sc2 = new Scanner(System.in);
-                            int id = sc2.nextInt();
-//                            sc2.close();
-                            System.out.println("Enter Name");
-                            Scanner sc3 = new Scanner(System.in);
-                            String name = sc3.nextLine();
-//                            sc3.close();
-                            String name1 = sc3.nextLine();
-                            System.out.println("Enter Price");
-                            Scanner sc4 = new Scanner(System.in);
-                            float price1 = sc4.nextFloat();
-//                            sc4.close();
-                            Admin.changeItem(name1, id, price1);
-                            System.out.println("Item changed");
                             break;
-                        }
-                        case 3: {
-                            System.out.println("Enter Item ID");
-                            Scanner sc2 = new Scanner(System.in);
-                            int id1 = sc2.nextInt();
-//                            sc2.close();
-                            Admin.removeItem(id1);
-                            System.out.println("Item removed");
-                            break;
-                        }
-
-                    }
-                    break;
-                }
-                case 3: {
-                    System.out.println("Enter the expense");
-                    Scanner sc4 = new Scanner(System.in);
-                    float price1 = sc4.nextFloat();
-//                    sc4.close();
-                    Admin.addExpense(price1);
-                    break;
-                }
-
-                case 4: {
-                    System.out.println("Enter order id between 0-" + Admin.allOrders.size());
-                    Scanner sc2 = new Scanner(System.in);
-                    int id = sc2.nextInt();
-//                    sc2.close();
-                    System.out.println(Admin.allOrders.get(id));
-                    System.out.println("Press 1 to change to the cooking state to SERVED else press 0");
-                    Scanner sc3 = new Scanner(System.in);
-                    int id2 = sc3.nextInt();
-//                    sc3.close();
-                    switch (id2) {
-                        case 0: {
-                            Admin.allOrders.get(id).setState(0);
-                            System.out.println("The order state is PREPARING");
-                            break;
-                        }
-                        case 1: {
-                            Admin.allOrders.get(id).setState(1);
-                            System.out.println("The order state is set to SERVED");
+                        } catch (Exception m) {
+                            System.out.println("Please enter a valid id");
                             break;
                         }
                     }
-                    break;
+                    case 5: {
+                        System.out.println("Your revenue is" + Admin.revenue());
+                        break;
+                    }
+                    case 6: {
+                        System.out.println("Your profit is" + Admin.profit());
+                        break;
+                    }
+//                    case 7: {
+//                        System.out.println("Please enter the customer's name");
+//                        Scanner sc2 = new Scanner(System.in);
+//                        String name = sc2.nextLine();
+//                        Solution.PriceList.printPriceList();
+//                        Customer c1 = new Customer(name);
+//                        c1.order();
+//                        System.out.println("Thank you for ordering, you can check your order status from the main menu");
+//                        break;
+//                    }
+
+                    default:
+                        System.out.println("Please enter an integer between 1-6");
                 }
-                case 5: {
-                    System.out.println("Your revenue is" + Admin.revenue());
-                    break;
-                }
-                case 6: {
-                    System.out.println("Your profit is" + Admin.profit());
-                    break;
-                }
-                case 7: {
-                    System.out.println("Please enter the customer's name");
-                    Scanner sc2 = new Scanner(System.in);
-                    String name = sc2.nextLine();
-                    Solution.PriceList.printPriceList();
-                    Customer c1= new Customer(name);
-                    c1.order();
-                    System.out.println("Thank you for ordering, you can check your order status from the main menu");
-                    break;
-                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter an integer between 1-6");
+                break;
+            } catch (NullPointerException mm) {
+                System.out.println("Please enter an integer");
+                break;
             }
 
 

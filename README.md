@@ -37,7 +37,7 @@ Inputs:
 For customers, the order can be taken if the restaurant is in open state. 
 if it is closed or full it should deny order or display the same.
 Then the menu could be shown and items that are ordered will go into taken state. And the item should finally be served.
-For the administration menu  the option to add more items to the menu or change price could be there. 
+For the administration menu the option to add more items to the menu or change price could be there. 
 
 Output:
 
