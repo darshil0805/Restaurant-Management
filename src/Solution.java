@@ -242,9 +242,10 @@ public class Solution {
                        System.out.println("Press 2 to see existing order status and bill");
                        System.out.println("Press 3 to go to the main menu");
                        Scanner sc = new Scanner(System.in);
+                       int get = sc.nextInt();
                        try {
-                           if(sc.nextInt()==3){break;}
-                       switch (sc.nextInt()) {
+                           if(get==3){break;}
+                       switch (get) {
                            case 1: {
                                System.out.println("Please enter your name");
                                Scanner sc2 = new Scanner(System.in);
