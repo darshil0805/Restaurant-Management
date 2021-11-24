@@ -97,6 +97,7 @@ class Customer {
         newOrder = new Order();
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextInt()) {
+
             int id = scanner.nextInt();
             int quant = scanner.nextInt();
             ItemQ food = new ItemQ(Solution.PriceList.priceList.get(id), quant);
@@ -220,6 +221,21 @@ public class Solution {
         }
     }
 
+    static class Closed extends Thread{
+        public void run(){
+            System.out.println("Restaurant is Closed/Full, no new orders can be taken");
+            System.out.println("Press 2 to see existing order status and bill");
+            System.out.println("Press 3 to go to the main menu");
+        }
+    }
+    static class Opened extends Thread{
+        public void run(){
+            System.out.println("Press 1 for New Customer");
+            System.out.println("Press 2 to see existing order status and bill");
+            System.out.println("Press 3 to go to the main menu");
+        }
+    }
+
     public static void main(String[] args) {
         new Customer("Darshil");
         new Customer("Sarthak");
@@ -238,14 +254,12 @@ public class Solution {
                    System.out.println("Welcome to Pizzeria, Hope you have a Good day");
                    while (true) {
                        if (RestaurantState.state == 0) {
-                           System.out.println("Restaurant is Closed/Full, no new orders can be taken");
-                           System.out.println("Press 2 to see existing order status and bill");
-                           System.out.println("Press 3 to go to the main menu");
+                           Closed closed = new Closed();
+                           closed.start();
                        }
                        else{
-                           System.out.println("Press 1 for New Customer");
-                           System.out.println("Press 2 to see existing order status and bill");
-                           System.out.println("Press 3 to go to the main menu");
+                           Opened opened = new Opened();
+                           opened.start();
                        }
 
                        Scanner sc = new Scanner(System.in);
@@ -282,7 +296,6 @@ public class Solution {
                                break;
                        }} catch (Exception e) {
                            System.out.println("Please Enter either 1 or 2");
-                           break;
                        }
 
                    } break;}
@@ -293,10 +306,11 @@ public class Solution {
                    Scanner p = new Scanner(System.in);
                    String pass = p.nextLine();
                    if (pass.equals("6969")){
+                       System.out.println("Welcome Admin, " + formatter.format(date));
 
                    while (true) {
 
-                       System.out.println("Welcome Admin, " + formatter.format(date));
+
                        System.out.println("Press 1: To change the restaurant state");
                        System.out.println("Press 2: To edit the Pricelist");
                        System.out.println("Press 3: To add an expense");
@@ -359,8 +373,8 @@ public class Solution {
                                                        Admin.addItem(name, price);
                                                        System.out.println("Item added");
                                                        break;
-                                                   } catch (Exception mmm) {
-                                                       System.out.println("please enter a floating point integer");
+                                                   } catch (Exception mmm) { //different type of errors may come so using general class
+                                                       System.out.println("please enter a floating point number");
                                                        break;
                                                    }
                                                }
@@ -368,19 +382,18 @@ public class Solution {
                                            case 2: {
                                                System.out.println("Enter Item ID");
                                                Scanner sc2 = new Scanner(System.in);
-                                               int id = sc2.nextInt();
+                                               try {     int id = sc2.nextInt();
                                                System.out.println("Enter Name");
                                                Scanner sc3 = new Scanner(System.in);
                                                String name1 = sc3.nextLine();
                                                System.out.println("Enter Price");
                                                Scanner sc4 = new Scanner(System.in);
-                                               try {
                                                    float price1 = sc4.nextFloat();
                                                    Admin.changeItem(name1, id, price1);
                                                    System.out.println("Item changed");
                                                    break;
                                                } catch (Exception kk) {
-                                                   System.out.println("Please enter floating point no");
+                                                   System.out.println("Please enter valid inputs");
                                                    break;
                                                }
                                            }
@@ -397,7 +410,7 @@ public class Solution {
                                        }
                                        break;
                                    } catch (Exception mm) {
-                                       System.out.println("Please enter an integer between 1-3");
+                                       System.out.println("Please enter valid input");
                                        break;
                                    }
                                }
@@ -457,11 +470,11 @@ public class Solution {
                                    }
                                }
                                case 5: {
-                                   System.out.println("Your revenue is" + Admin.revenue());
+                                   System.out.println("Your revenue is " + Admin.revenue());
                                    break;
                                }
                                case 6: {
-                                   System.out.println("Your profit is" + Admin.profit());
+                                   System.out.println("Your profit is " + Admin.profit());
                                    break;
                                }
 
