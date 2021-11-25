@@ -22,13 +22,20 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        new Customer("Darshil");
-        new Customer("Sarthak");
-        SuperAdmin.Admin.addItem("Paneer Butter", 99.2f);
+        SuperAdmin.Admin.addItem("Paneer Butter Masala", 99.2f);
         SuperAdmin.Admin.addItem("Dal Makhani", 9.2f);
+        SuperAdmin.Admin.addItem("Butter Chicken", 105f);
+        SuperAdmin.Admin.addItem("Shahi Paneer", 87.6f);
+        SuperAdmin.Admin.addItem("Coffee", 2.6f);
+        SuperAdmin.Admin.addItem("Water", 2f);
+        SuperAdmin.Admin.addItem("Tea", 3f);
         SuperAdmin.Admin.addItem("Butter Roti", 22.6f);
+        SuperAdmin.Admin.addItem("Plain Roti", 14.4f);
+        SuperAdmin.Admin.addItem("Missi Roti", 10f);
+
+
         while (true) {
-            System.out.println("Press 1 for Admin Menu and 2 for Customer Menu");
+            System.out.println("Press 1 for Admin Menu, 2 for Customer Menu, press anything except an integer to end the program");
             Scanner s2 = new Scanner(System.in);
             try {
                 int major = s2.nextInt();
@@ -93,10 +100,10 @@ public class Solution {
                     case 1: {
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date date = new Date();
-                        System.out.println("Please enter the 4-digit pin to continue");
+                        System.out.println("Please enter the password to continue");
                         Scanner p = new Scanner(System.in);
                         String pass = p.nextLine();
-                        if (pass.equals("6969")) {
+                        if (pass.equals("CS_F213")) {
                             System.out.println("Welcome Admin, " + formatter.format(date));
 
                             while (true) {
@@ -119,7 +126,7 @@ public class Solution {
                                     }
                                     switch (main) {
                                         case 1: {
-                                            System.out.println("The current restaurant state is" + States.RestaurantState.currentState());
+                                            System.out.println(States.RestaurantState.currentState());
                                             System.out.println("Press 0 to set the state to closed/full, 1 to set state to opened ");
                                             Scanner sc1 = new Scanner(System.in);
                                             try {
@@ -233,7 +240,7 @@ public class Solution {
                                             try {
 
                                                 int id = sc2.nextInt();
-                                                System.out.println(SuperAdmin.Admin.getAllOrders().get(id));
+                                                System.out.println(SuperAdmin.Admin.getAllOrders().get(id).getCookingState());
                                                 System.out.println("Press 1 to change to the cooking state to SERVED else press 0");
                                                 Scanner sc3 = new Scanner(System.in);
                                                 try {
@@ -292,12 +299,12 @@ public class Solution {
                         }
                     }
                     default:
-                        System.out.println("Please enter numbers from 0-2");
+                        System.out.println("Please enter numbers from 1-2");
                 }
             } catch (Exception e) {
-                System.out.println("Please enter either 1 or 2");
-
+                break;
             }
+
         }
     }
 }

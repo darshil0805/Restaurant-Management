@@ -12,12 +12,16 @@ public class Customer implements customerMethods{
     private Order newOrder;
 
 
+
     Customer(String name) {
         this.name = name;
         SuperAdmin.Admin.addCustomer(this);
         this.id = SuperAdmin.Admin.getAllCustomers().size();
     }
 
+    public Order getNewOrder() {
+        return newOrder;
+    }
 
     void getBill() {
         newOrder.printOrder();
@@ -33,12 +37,11 @@ public class Customer implements customerMethods{
 
     // the order function is used to initiate an order instance, the oder is to be given in a specific format
     void order() {
-        System.out.println("The order should be in the format : Item1id Item1quantity <enter>Item2id Item2quantity <enter> Item3id Item3quantity");
+        System.out.println("The order should be in the format : Item1id Item1Quantity <enter>Item2id Item2Quantity <enter> Item3id Item3Quantity");
         System.out.println("Press anything except an integer to end the order");
         newOrder = new Order();
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextInt()) {
-
             int id = scanner.nextInt();
             int quant = scanner.nextInt();
             ItemQ food = new ItemQ(SuperAdmin.PriceList.getPriceList().get(id), quant);
