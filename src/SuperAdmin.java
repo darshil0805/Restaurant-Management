@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class SuperAdmin {
 
     // PriceList is basically the collection of all the items that are available in the menu with their price
@@ -21,7 +22,7 @@ public class SuperAdmin {
     //Changing the restaurant state
     //And other functions too
 
-    static final class Admin {
+    static final class Admin{
         private static ArrayList<Order> allOrders = new ArrayList<>();
         private static ArrayList<Customer> allCustomers = new ArrayList<>();
 

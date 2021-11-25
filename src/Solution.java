@@ -54,6 +54,10 @@ public class Solution {
                                 }
                                 switch (get) {
                                     case 1: {
+                                        System.out.println("How many guests?");
+                                        Scanner g1= new Scanner(System.in);
+                                        int NoG= g1.nextInt();
+                                        System.out.println("A table for " +NoG+" assigned. Kindly have your seats" );
                                         System.out.println("Please enter your name");
                                         Scanner sc2 = new Scanner(System.in);
                                         String name = sc2.nextLine();
