@@ -1,5 +1,8 @@
 import java.text.SimpleDateFormat; //importing the java lib to get the current date
 import java.util.*;// importing various lists
+//The Open/closed principle implies that you can create systems in which new features are added by adding new code as opposed to changing old code
+
+
 
 public class Solution {
     static class Closed extends Thread {
@@ -35,7 +38,7 @@ public class Solution {
 
                         System.out.println("Welcome to Pizzeria, Hope you have a Good day");
                         while (true) {
-                            if (States.RestaurantState.state == 0) {
+                            if (States.RestaurantState.getState() == 0) {
                                 Closed closed = new Closed();
                                 closed.start();
                             } else {
@@ -46,7 +49,7 @@ public class Solution {
                             Scanner sc = new Scanner(System.in);
                             int get = sc.nextInt();
                             try {
-                                if ((States.RestaurantState.state == 0 && get == 1) || get == 3) {
+                                if ((States.RestaurantState.getState() == 0 && get == 1) || get == 3) {
                                     break;
                                 }
                                 switch (get) {
@@ -61,15 +64,15 @@ public class Solution {
                                         break;
                                     }
                                     case 2: {
-                                        for (int i = 0; i < SuperAdmin.Admin.allCustomers.size(); i++) {
-                                            SuperAdmin.Admin.allCustomers.get(i).printCustomer();
+                                        for (int i = 0; i < SuperAdmin.Admin.getAllCustomers().size(); i++) {
+                                            SuperAdmin.Admin.getAllCustomers().get(i).printCustomer();
                                         }
 
                                         System.out.println("Please Enter the Customer Id to view your bill and see Order status");
                                         Scanner sc2 = new Scanner(System.in);
                                         int idN = sc2.nextInt();
-                                        SuperAdmin.Admin.allCustomers.get(idN - 1).getBill();
-                                        SuperAdmin.Admin.allCustomers.get(idN - 1).getOrderStatus();
+                                        SuperAdmin.Admin.getAllCustomers().get(idN - 1).getBill();
+                                        SuperAdmin.Admin.getAllCustomers().get(idN - 1).getOrderStatus();
                                         break;
                                     }
                                     default:
@@ -221,24 +224,24 @@ public class Solution {
                                         }
 
                                         case 4: {
-                                            System.out.println("Enter order id between 0-" + SuperAdmin.Admin.allOrders.size());
+                                            System.out.println("Enter order id between 0-" + SuperAdmin.Admin.getAllOrders().size());
                                             Scanner sc2 = new Scanner(System.in);
                                             try {
 
                                                 int id = sc2.nextInt();
-                                                System.out.println(SuperAdmin.Admin.allOrders.get(id));
+                                                System.out.println(SuperAdmin.Admin.getAllOrders().get(id));
                                                 System.out.println("Press 1 to change to the cooking state to SERVED else press 0");
                                                 Scanner sc3 = new Scanner(System.in);
                                                 try {
                                                     int id2 = sc3.nextInt();
                                                     switch (id2) {
                                                         case 0: {
-                                                            SuperAdmin.Admin.allOrders.get(id).setState(0);
+                                                            SuperAdmin.Admin.getAllOrders().get(id).setState(0);
                                                             System.out.println("The order state is PREPARING");
                                                             break;
                                                         }
                                                         case 1: {
-                                                            SuperAdmin.Admin.allOrders.get(id).setState(1);
+                                                            SuperAdmin.Admin.getAllOrders().get(id).setState(1);
                                                             System.out.println("The order state is set to SERVED");
                                                             break;
                                                         }

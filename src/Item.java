@@ -1,6 +1,7 @@
 // item class signifies the class of each food item that is available on the Restaurant Menu
 //It consists of various parameters as shown below
-class Item {
+
+class Item  {
     String name;
     int id;
     float price;
@@ -8,6 +9,7 @@ class Item {
     void printItem() {
         System.out.println("ItemID: " + id + " Name: " + name + " Price: " + price);
     }
+
 
 
     Item(int id, String name, float price) {
@@ -33,3 +35,5 @@ class ItemQ extends Item {
     }
 
 }
+
+//loose coupling

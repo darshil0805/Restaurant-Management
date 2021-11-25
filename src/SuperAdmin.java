@@ -3,12 +3,15 @@ public class SuperAdmin {
 
     // PriceList is basically the collection of all the items that are available in the menu with their price
     static class PriceList {
-        static ArrayList<Item> priceList = new ArrayList<>();
+        private static ArrayList<Item> priceList = new ArrayList<>();
 
         static void printPriceList() {
             for (int i = 0; i < priceList.size(); i++) {
                 priceList.get(i).printItem();
             }
+        }
+        static ArrayList<Item> getPriceList(){
+            return priceList;
         }
     }
 
@@ -19,16 +22,31 @@ public class SuperAdmin {
     //And other functions too
 
     static final class Admin {
-        static ArrayList<Order> allOrders = new ArrayList<>();
-        static ArrayList<Customer> allCustomers = new ArrayList<>();
+        private static ArrayList<Order> allOrders = new ArrayList<>();
+        private static ArrayList<Customer> allCustomers = new ArrayList<>();
 
         private static float expenses = 0;
+
+        public static ArrayList<Customer> getAllCustomers() {
+            return allCustomers;
+        }
 
         static void changeItem(String name, int index, float price) {
             Item item = new Item(index, name, price);
             SuperAdmin.PriceList.priceList.set(index, item);
         }
 
+        static void addOrder(Order order){
+            allOrders.add(order);
+        }
+
+        static void addCustomer(Customer customer){
+            allCustomers.add(customer);
+        }
+
+        static ArrayList<Order> getAllOrders(){
+            return  allOrders;
+        }
 
         static void addItem(String name, float price) {
             int index = SuperAdmin.PriceList.priceList.size();
@@ -64,3 +82,5 @@ public class SuperAdmin {
         }
     }
 }
+
+//loose coupling

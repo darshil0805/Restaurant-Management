@@ -1,9 +1,13 @@
+
 public class States {
 
     //Depending upon whether restaurant is open/closed the class is to be implemented
     static class RestaurantState {
-        static int state = 0;
+        private static int state = 0;
 
+        static int getState() {
+          return state;
+        }
 
         public static String currentState() {
             // 0 stands for closed/full 1 stands for open
@@ -24,8 +28,8 @@ public class States {
     static class CookingState {
         private int cState = 0;
 
-        @Override
-        public String toString() {
+
+        public String getCookingState() {
             // 0 stands for closed/full 1 stands for open
 
             if (cState == 0) {

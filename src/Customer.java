@@ -1,16 +1,21 @@
 import java.util.Scanner;
 
+
+interface customerMethods{
+    void getOrderStatus();
+    void printCustomer();
+}
 //Customer class contains the details of all the customers with various parameters as shown
-public class Customer {
-    String name;
+public class Customer implements customerMethods{
+    private String name;
     private int id;
-    Order newOrder;
+    private Order newOrder;
 
 
     Customer(String name) {
         this.name = name;
-        SuperAdmin.Admin.allCustomers.add(this);
-        this.id = SuperAdmin.Admin.allCustomers.size();
+        SuperAdmin.Admin.addCustomer(this);
+        this.id = SuperAdmin.Admin.getAllCustomers().size();
     }
 
 
@@ -21,8 +26,8 @@ public class Customer {
 
     }
 
-    String getMenu() {
-        return SuperAdmin.PriceList.priceList.toString();
+    void getMenu() {
+        SuperAdmin.PriceList.printPriceList();
     }
 
 
@@ -36,17 +41,15 @@ public class Customer {
 
             int id = scanner.nextInt();
             int quant = scanner.nextInt();
-            ItemQ food = new ItemQ(SuperAdmin.PriceList.priceList.get(id), quant);
-            newOrder.currentOrder.add(food);
+            ItemQ food = new ItemQ(SuperAdmin.PriceList.getPriceList().get(id), quant);
+            newOrder.getCurrentOrder().add(food);
         }
     }
 
-    void getOrderStatus() {
-        System.out.println(newOrder.toString());
+    public void getOrderStatus() {
+        System.out.println(newOrder.getCookingState());
     }
-
-
-    void printCustomer() {
+    public void printCustomer() {
         System.out.println("CustomerID: " + id + " Name: " + name);
     }
 
